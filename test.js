@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-
-const uri = "mongodb+srv://mangatesarthak633_db_user:demo-project@cluster0.shqgo1f.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+import mongoose from "mongoose";";
+  
+MONGO_URI="Your_URI";
 
 mongoose.connect(uri)
   .then(() => console.log("Connected successfully"))
