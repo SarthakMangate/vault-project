@@ -61,19 +61,21 @@ export default function VaultList({ vaultItems, onSave }) {
           <button type="submit" className="btn">{editing ? "Update Item" : "Add Item"}</button>
         </form>
 
-        <table className="vault-table">
-          <tbody>
-            {filteredItems.length === 0 ? (
-              <tr>
-                <td colSpan="6" style={{ textAlign: "center", padding: "20px", fontStyle: "italic" }}>No items found.</td>
-              </tr>
-            ) : (
-              filteredItems.map((item) => (
-                <VaultItemRow key={item.id} item={item} onEdit={handleEdit} onDelete={handleDelete} />
-              ))
-            )}
-          </tbody>
-        </table>
+        <div className="table-wrapper">
+          <table className="vault-table">
+            <tbody>
+              {filteredItems.length === 0 ? (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: "center", padding: "20px", fontStyle: "italic" }}>No items found.</td>
+                </tr>
+              ) : (
+                filteredItems.map((item) => (
+                  <VaultItemRow key={item.id} item={item} onEdit={handleEdit} onDelete={handleDelete} />
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <style jsx>{`
@@ -168,10 +170,15 @@ export default function VaultList({ vaultItems, onSave }) {
           box-shadow: 0 8px 25px rgba(0,0,0,0.8);
         }
 
+        .table-wrapper {
+          overflow-x: auto;
+          margin-top: 28px;
+        }
+
         .vault-table {
           width: 100%;
-          margin-top: 28px;
           border-collapse: collapse;
+          min-width: 600px;
         }
 
         .vault-table td {
@@ -183,7 +190,62 @@ export default function VaultList({ vaultItems, onSave }) {
           background: rgba(255,255,255,0.05);
           transition: background 0.3s ease;
         }
+
+        /* 📱 Responsive Design */
+        @media (max-width: 768px) {
+          .glass-card {
+            padding: 25px 20px;
+            width: 100%;
+          }
+
+          .title {
+            font-size: 1.6rem;
+          }
+
+          .btn {
+            font-size: 0.9rem;
+          }
+
+          .vault-form .form-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .input {
+            font-size: 0.9rem;
+            padding: 10px 12px;
+          }
+
+          .vault-table td {
+            padding: 8px;
+            font-size: 0.9rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .container {
+            padding: 30px 10px;
+          }
+
+          .glass-card {
+            padding: 20px 15px;
+            border-radius: 16px;
+          }
+
+          .title {
+            font-size: 1.4rem;
+          }
+
+          .input, textarea {
+            font-size: 0.85rem;
+          }
+
+          .btn {
+            padding: 10px;
+            font-size: 0.85rem;
+          }
+        }
       `}</style>
     </div>
   );
 }
+

@@ -27,7 +27,6 @@ export default function PasswordGenerator({ onGenerate }) {
     setGenerated(pwd);
     onGenerate(pwd);
 
-    // Copy to clipboard safely
     navigator.clipboard.writeText(pwd).then(() => {
       setCopied(true);
     });
@@ -86,7 +85,6 @@ export default function PasswordGenerator({ onGenerate }) {
         </label>
       </div>
 
-      {/* Glassmorphic Generate Button */}
       <button className="btn generate-btn" onClick={generatePassword}>
         Generate Password
       </button>
@@ -116,7 +114,8 @@ export default function PasswordGenerator({ onGenerate }) {
           backdrop-filter: blur(20px);
           border-radius: 24px;
           padding: 30px;
-          width: 350px;
+          width: 90%;
+          max-width: 400px;
           color: #fff;
           margin: 30px auto;
           box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
@@ -126,7 +125,7 @@ export default function PasswordGenerator({ onGenerate }) {
 
         h3 {
           margin-bottom: 20px;
-          font-size: 1.5rem;
+          font-size: 1.6rem;
           background: linear-gradient(90deg, #764ba2, #667eea);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -143,9 +142,17 @@ export default function PasswordGenerator({ onGenerate }) {
           margin-top: 6px;
         }
 
+        .options {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+        }
+
         .options label {
-          display: inline-block;
-          margin: 6px 12px 0 0;
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
           font-size: 0.9rem;
           cursor: pointer;
         }
@@ -188,11 +195,6 @@ export default function PasswordGenerator({ onGenerate }) {
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
         }
 
-        .generate-btn:active {
-          transform: translateY(0px) scale(0.98);
-          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-        }
-
         .input {
           width: 100%;
           margin-top: 18px;
@@ -207,12 +209,32 @@ export default function PasswordGenerator({ onGenerate }) {
           transition: all 0.3s ease;
         }
 
-        .input:focus {
-          outline: none;
-          border: 1px solid #fff;
-          background: rgba(255, 255, 255, 0.2);
+        @media (max-width: 600px) {
+          .glass-card {
+            padding: 20px;
+            width: 95%;
+          }
+
+          h3 {
+            font-size: 1.3rem;
+          }
+
+          .generate-btn {
+            font-size: 0.9rem;
+            padding: 12px;
+          }
+
+          .options {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .input {
+            font-size: 0.9rem;
+          }
         }
       `}</style>
     </div>
   );
 }
+
