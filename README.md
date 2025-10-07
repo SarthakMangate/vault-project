@@ -50,11 +50,6 @@ Access the deployed project here: http://vault-project-eta.vercel.app
     - JWT_SECRET=<Your secret key for JWT>
 
 
-Example:
-- MONGO_URI=mongodb+srv://username:password@cluster0.mongodb.net/vault-demo?retryWrites=true&w=majority
-- JWT_SECRET=mySuperSecretKey123
-
-
 - Note: Do NOT commit .env.local to GitHub. It is included in .gitignore.
 
 ### 4. Run the development server
