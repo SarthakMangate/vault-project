@@ -53,8 +53,8 @@ export default function VaultList({ vaultItems, onSave }) {
         <form onSubmit={handleSubmit} className="vault-form">
           <div className="form-grid">
             <input name="title" placeholder="Title" className="input" value={form.title} onChange={handleChange} required />
-            <input name="username" placeholder="Username" className="input" value={form.username} onChange={handleChange} required />
-            <input name="password" placeholder="Password" className="input" value={form.password} onChange={handleChange} required />
+            <input name="username" placeholder="Username" className="input" value={form.username} onChange={handleChange} />
+            <input name="password" placeholder="Password" className="input" value={form.password} onChange={handleChange} />
             <input name="url" placeholder="URL" className="input" value={form.url} onChange={handleChange} />
             <textarea name="notes" placeholder="Notes" className="input notes" value={form.notes} onChange={handleChange} />
           </div>

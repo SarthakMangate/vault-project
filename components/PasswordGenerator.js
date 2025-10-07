@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function PasswordGenerator({ onGenerate }) {
   const [length, setLength] = useState(12);
@@ -6,6 +6,7 @@ export default function PasswordGenerator({ onGenerate }) {
   const [useSymbols, setUseSymbols] = useState(true);
   const [excludeSimilar, setExcludeSimilar] = useState(true);
   const [generated, setGenerated] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const similarChars = "Il1O0";
   const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -25,7 +26,23 @@ export default function PasswordGenerator({ onGenerate }) {
     }
     setGenerated(pwd);
     onGenerate(pwd);
+
+    // Copy to clipboard safely
+    navigator.clipboard.writeText(pwd).then(() => {
+      setCopied(true);
+    });
   }
+
+  function clearClipboard() {
+    navigator.clipboard.writeText("").then(() => setCopied(false));
+  }
+
+  useEffect(() => {
+    if (copied) {
+      const timer = setTimeout(() => setCopied(false), 15000);
+      return () => clearTimeout(timer);
+    }
+  }, [copied]);
 
   return (
     <div className="glass-card">
@@ -69,10 +86,24 @@ export default function PasswordGenerator({ onGenerate }) {
         </label>
       </div>
 
-      <button onClick={generatePassword}>Generate Password</button>
+      {/* Glassmorphic Generate Button */}
+      <button className="btn generate-btn" onClick={generatePassword}>
+        Generate Password
+      </button>
 
       {generated && (
-        <input readOnly className="input" value={generated} onClick={(e) => e.target.select()} />
+        <div style={{ marginTop: "15px" }}>
+          <input
+            readOnly
+            className="input"
+            value={generated}
+            onClick={(e) => e.target.select()}
+          />
+          <button className="btn small mt-2" onClick={clearClipboard}>
+            Clear Clipboard
+          </button>
+          {copied && <div style={{ marginTop: "8px" }}>✅ Password copied!</div>}
+        </div>
       )}
 
       <style jsx>{`
@@ -119,13 +150,9 @@ export default function PasswordGenerator({ onGenerate }) {
           cursor: pointer;
         }
 
-        button {
-          width: 100%;
-          padding: 12px;
-          margin-top: 18px;
+        .btn {
           border-radius: 12px;
           border: none;
-          background: linear-gradient(90deg, #764ba2, #667eea);
           color: #fff;
           font-weight: bold;
           cursor: pointer;
@@ -133,10 +160,37 @@ export default function PasswordGenerator({ onGenerate }) {
           transition: all 0.3s ease;
         }
 
-        button:hover {
-          background: linear-gradient(90deg, #667eea, #764ba2);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        .btn.small {
+          width: auto;
+          padding: 8px 14px;
+          font-size: 0.85rem;
+          margin-top: 8px;
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        .generate-btn {
+          width: 100%;
+          padding: 14px;
+          margin-top: 18px;
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+          font-weight: 700;
+          font-size: 1.05rem;
+        }
+
+        .generate-btn:hover {
+          background: rgba(255, 255, 255, 0.15);
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .generate-btn:active {
+          transform: translateY(0px) scale(0.98);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
         }
 
         .input {
