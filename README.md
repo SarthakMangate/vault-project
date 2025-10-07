@@ -4,6 +4,10 @@ A secure password vault web application built with **Next.js**, **MongoDB Atlas*
 
 ---
 
+## Live Demo
+
+Access the deployed project here: http://vault-project-eta.vercel.app
+
 ## Features
 
 - User signup and login with **JWT authentication**
